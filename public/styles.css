@@ -113,6 +113,11 @@ main.container.main--auth {
   justify-content: center;
 }
 
+.login-react-mount {
+  width: 100%;
+  max-width: 400px;
+}
+
 .card {
   width: 100%;
   max-width: 400px;

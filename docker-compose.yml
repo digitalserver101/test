@@ -1,0 +1,18 @@
+services:
+  web:
+    build: .
+    image: vuln-webportal:latest
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      NODE_ENV: production
+      DATA_FILE: /data/data.json
+      # Override for anything other than local labs:
+      # SESSION_SECRET: use-a-long-random-string
+    volumes:
+      - portal-data:/data
+    restart: unless-stopped
+
+volumes:
+  portal-data:

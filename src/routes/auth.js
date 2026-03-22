@@ -10,6 +10,7 @@ const {
   updateUserPasswordAndMarkResetUsed,
 } = require('../db');
 const { hasValidContext } = require('../lib/requestContext');
+const { sendDecoy } = require('../lib/decoyResponse');
 
 const router = express.Router();
 
@@ -71,14 +72,14 @@ router.post('/login', (req, res) => {
 
 router.get('/register', (req, res) => {
   if (!hasValidContext(req)) {
-    return res.status(404).render('404');
+    return sendDecoy(res);
   }
   res.render('register', { message: null });
 });
 
 router.post('/register', (req, res) => {
   if (!hasValidContext(req)) {
-    return res.status(404).render('404');
+    return sendDecoy(res);
   }
 
   const { username, email, password } = req.body;
@@ -145,7 +146,7 @@ router.post('/reset', (req, res) => {
   bucket.count += 1;
 
   if (bucket.count > RESET_MAX_ATTEMPTS) {
-    return res.status(429).render('reset', {
+    return res.status(200).render('reset', {
       message:
         'Too many attempts. Please wait a while before trying again.',
     });
@@ -185,7 +186,7 @@ router.post('/reset', (req, res) => {
 
 router.post('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/login');
+    res.redirect('/');
   });
 });
 

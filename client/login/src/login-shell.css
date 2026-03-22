@@ -1,0 +1,5 @@
+/* Optional hooks for the React login mount; main layout uses /styles.css */
+
+.login-react-mount .card.auth-card {
+  max-width: 400px;
+}

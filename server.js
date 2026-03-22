@@ -8,6 +8,7 @@ const morgan = require('morgan');
 
 const { initDb } = require('./src/db');
 const authRoutes = require('./src/routes/auth');
+const { sendDecoy } = require('./src/lib/decoyResponse');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -63,10 +64,11 @@ initDb();
 app.use('/', authRoutes);
 
 app.use((req, res) => {
-  res.status(404).render('404');
+  sendDecoy(res);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`Server listening on http://${HOST}:${PORT}`);
 });
 

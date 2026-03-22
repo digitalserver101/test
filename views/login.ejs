@@ -1,29 +1,19 @@
+<%
+  const loginPropsJson = JSON.stringify({
+    message: typeof message !== 'undefined' && message ? message : null,
+    justRegistered: typeof justRegistered !== 'undefined' && !!justRegistered,
+  }).replace(/</g, '\\u003c');
+%>
 <%-
   include('layout', {
     title: 'Login',
     isAuthPage: true,
-    body: `
-  <section class="card auth-card">
-    <h2>Login</h2>
-    ${message ? `<p class="message">${message}</p>` : ''}
-    <form method="post" action="/login">
-      <label>
-        Username
-        <input type="text" name="username" required />
-      </label>
-      <label>
-        Password
-        <input type="password" name="password" required />
-      </label>
-      <button type="submit">Sign in</button>
-    </form>
-    <p class="muted">
-      <a href="/forgot">Forgot your password?</a>
-    </p>
-  </section>
-  ${typeof justRegistered !== 'undefined' && justRegistered ? `<script>alert('FLAG{found_hidden_register_and_registered}');</script>` : ''}
-`
+    body:
+      '<script type="application/json" id="login-props">' +
+      loginPropsJson +
+      '</script>' +
+      '<div id="login-react-root" class="login-react-mount"></div>' +
+      '<link rel="stylesheet" href="/dist/login/assets/main.css" />' +
+      '<script type="module" src="/dist/login/assets/main.js"></script>',
   })
 %>
-
- `

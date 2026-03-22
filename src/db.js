@@ -2,7 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-const DATA_FILE = path.join(__dirname, '..', 'data.json');
+const DATA_FILE = process.env.DATA_FILE
+  ? path.resolve(process.env.DATA_FILE)
+  : path.join(__dirname, '..', 'data.json');
 
 let state = null;
 
@@ -54,7 +56,7 @@ function initDb() {
 function getUserById(id) {
   const s = loadState();
   return s.users.find((u) => u.id === id) || null;
-}``
+}
 
 function getUserByUsername(username) {
   const s = loadState();
