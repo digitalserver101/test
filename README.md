@@ -33,3 +33,5 @@ npm start
 ## Default seeded account
 
 On first start with an empty database, the app creates `admin` / `Password123!` and logs it to the container/process logs.
+
+CI check.
